@@ -1,6 +1,6 @@
 const userControllers = require('./users.controllers')
-const mailer = require('../utils/mailer')
-//? Get, Post
+// const mailer = require('../utils/mailer')
+// ? Get, Post
 
 const getAllUsers = (req, res) => {
     userControllers.findAllUsers()
@@ -61,7 +61,6 @@ const postUser = (req, res) => {
 const patchUser = (req, res) => {
     const id = req.params.id 
     const {firstName, lastName, email, gender, birthday, role, status} = req.body
-
     userControllers.updateUser(id, {firstName, lastName, email, gender, birthday, role, status})
         .then((data) =>{
             if(data){

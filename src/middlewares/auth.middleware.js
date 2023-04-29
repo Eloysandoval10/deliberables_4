@@ -1,12 +1,12 @@
-const JwtStrategy = require('passport-jwt').Strategy
-const { ExtractJwt } = require('passport-jwt')
 const passport = require('passport')
+const JwtStrategy = require('passport-jwt').Strategy
+const  ExtractJwt  = require('passport-jwt').ExtractJwt
 
-const jwtSecret = require('../../config').api.jwtSecret
 const { findUserById } = require('../users/users.controllers')
+const jwtSecret  = require('../../config').jwtSecret
 
 const options = {
-    jwtFromRequest : ExtractJwt.fromAuthHeaderWithScheme('jwt'),
+    jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: jwtSecret
 }
 
@@ -15,7 +15,7 @@ passport.use(
         findUserById(tokenDecoded.id)
             .then((user) => {
                 if(user){
-                    done(null, tokenDecoded) //? Caso Exitoso, porque el usuario si existe
+                    done(null, user) //? Caso Exitoso, porque el usuario si existe
                 } else {
                     done(null, false) //? Caso fallido, en el que no genera error, pero no existe el usuario
                 }
